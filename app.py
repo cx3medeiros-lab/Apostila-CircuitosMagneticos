@@ -45,7 +45,8 @@ with col1:
 
 with col2:
     # Espaço para uma imagem (exemplo de link público)
-    st.image("CircuitoBasico01.png")
+   st.image("CircuitoBasico01.png", 
+             caption="Representação de um Circuito Magnético com Núcleo e Bobina")
 
 # 4. AMBIENTE COMPUTACIONAL INTERATIVO
 st.markdown("---")
