@@ -2,6 +2,25 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 
+import streamlit as st
+
+# CSS para remover a barra superior inteira (onde fica a rapozinha)
+st.markdown("""
+    <style>
+    /* Esconde a barra superior (header) onde fica o ícone do GitHub */
+    header[data-testid="stHeader"] {
+        display: none !important;
+    }
+    
+    /* Remove o espaço em branco que sobra no topo após esconder o header */
+    .main .block-container {
+        padding-top: 1rem !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+# O código da apostila continua aqui...
+
 st.title("Olá, obrigado!")
 
 # 1. CONFIGURAÇÃO DA PÁGINA E ESTILO (CSS para Projeção)
