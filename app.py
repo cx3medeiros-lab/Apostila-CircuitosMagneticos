@@ -1,23 +1,5 @@
 import streamlit as st
 
-# 1. Definição do estilo (o nome da variável é 'estilo_limpo')
-estilo_limpo = """
-    <style>
-    /* Esconde o menu do topo, o rodapé e a barra de ferramentas */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    [data-testid="stToolbar"] {visibility: hidden !important;}
-    .stAppDeployButton {display: none;}
-    </style>
-    """
-
-# 2. Aplicação do estilo (usando o mesmo nome da variável acima)
-st.markdown(estilo_limpo, unsafe_allow_html=True)
-
-# --- Daqui para baixo continua o conteúdo da sua apostila ---
-st.write("Sua apostila de Circuitos Magnéticos")
-
 st.title("Hello World!")
 import streamlit as st
 import numpy as np
@@ -106,3 +88,7 @@ st.write("""
 Ao imprimir este documento, os gráficos acima representarão o estado da sua última 
 simulação. Utilize esta ferramenta para validar os exercícios da página 42 da apostila estática.
 """)
+
+# No final do seu arquivo app.py
+# Um espaço em branco no final do seu código Python para que o texto da apostila termine antes de chegar nos ícones.
+st.markdown("<br><br><br>", unsafe_allow_html=True)
