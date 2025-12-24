@@ -30,9 +30,32 @@ st.markdown("""
     
     /* Estiliza fórmulas matemáticas */
     .katex { font-size: 1.5em !important; }
+
+    /* Isso prepara a página para quando o usuário mandar imprimir pelo menu do navegador */
+    @media print {
+        /* Esconde elementos desnecessários na impressão */
+        header, footer, .stSidebar, [data-testid="stHeader"] {
+            display: none !important;
+        }
+        /* Garante que o conteúdo ocupe a largura total do papel */
+        .main .block-container {
+            max-width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        /* Força a quebra de página antes de cada título grande, se desejar */
+        h1, h2 {
+            page-break-before: always;
+        }
+        /* Mantém as cores e gráficos nítidos */
+        * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+    }
     </style>
     """, unsafe_allow_html=True)
-
+    
 # --- 3. CABEÇALHO E INTRODUÇÃO ---
 st.title("🧲 Circuitos Magnéticos: Módulo 1")
 st.write("""
