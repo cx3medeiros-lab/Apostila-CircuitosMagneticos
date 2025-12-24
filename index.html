@@ -3,131 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apostila Interativa - Circuitos Magnéticos</title>
-    
+    <title>Laboratório Magnético Animado</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <style>
-        body { 
-            font-family: 'Segoe UI', Arial, sans-serif; 
-            line-height: 1.6; padding: 20px; max-width: 950px; 
-            margin: auto; color: #333; background: #fff; 
-        }
-        h1 { color: #1E88E5; font-size: 2.5em; }
-        h2 { color: #0D47A1; border-bottom: 2px solid #1E88E5; padding-bottom: 8px; margin-top: 25px; }
+        body { font-family: 'Segoe UI', sans-serif; padding: 20px; max-width: 1000px; margin: auto; color: #333; }
+        .container-topo { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+        .col { flex: 1; min-width: 350px; }
         
-        .container-topo {
-            display: flex; flex-wrap: wrap; gap: 30px; align-items: center; margin-bottom: 20px;
+        /* Estilo do Canvas da Animação */
+        #canvasFluxo { 
+            background: #111; 
+            border-radius: 12px; 
+            width: 100%; 
+            max-width: 450px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
-        .col-texto { flex: 1; min-width: 320px; }
-        .col-imagem { flex: 1; min-width: 320px; text-align: center; }
+
+        .controls { background: #f4f7f9; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #d1d9e0; }
+        .result { background: #0D47A1; color: white; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 10px; }
         
-        img { 
-            display: block; max-width: 100%; height: auto; 
-            border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-        }
-
-        .controls { 
-            background: #f9f9f9; padding: 20px; border-radius: 12px; 
-            margin: 25px 0; border: 1px solid #eee; 
-        }
-        input[type=range] { width: 100%; cursor: pointer; }
-        .result { 
-            background: #e3f2fd; padding: 15px; border-radius: 8px; 
-            font-weight: bold; color: #0D47A1; text-align: center; font-size: 1.2em;
-        }
-
-        .chart-container { position: relative; height: 350px; width: 100%; margin: 20px 0; }
-
-        /* REGRAS DE IMPRESSÃO - SOLUÇÃO DEFINITIVA */
         @media print {
-            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            .controls { display: none !important; }
-            .container-topo { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; }
-            img { width: 300px !important; display: block !important; visibility: visible !important; }
-            .chart-container { height: 300px !important; page-break-inside: avoid; }
-            h2 { page-break-before: always; }
+            .controls, #canvasFluxo { display: none !important; }
+            .img-print { display: block !important; width: 300px; }
         }
-
-        @media (max-width: 600px) { .container-topo { flex-direction: column; } }
+        .img-print { display: none; } /* Só aparece na impressão se você quiser manter a estática lá */
     </style>
 </head>
 <body>
 
-    <h1>🧲 Circuitos Magnéticos: Módulo 1</h1>
+    <h1>🧲 Módulo 1: Fluxo Magnético Animado</h1>
 
     <div class="container-topo">
-        <div class="col-texto">
-            <h2>1. A Analogia de Hopkinson</h2>
-            <p>O fluxo magnético percorre o caminho de menor <b>Relutância</b>.</p>
-            <div style="font-size: 1.7em; padding: 15px 0; text-align: center;">
+        <div class="col">
+            <h2>Teoria Interativa</h2>
+            <p>A Força Magnetomotriz empurra o fluxo pelo núcleo:</p>
+            <div style="font-size: 1.6em; text-align: center; margin: 15px 0;">
                 \[ \mathcal{F} = \Phi \cdot \mathcal{R} \]
             </div>
-            <p>Onde \( \mathcal{F} = N \cdot I \) é a Força Magnetomotriz.</p>
+            <p>Observe como a velocidade das partículas aumenta com a <b>Corrente</b> e como o fluxo se dispersa no <b>Entreferro</b>.</p>
+            
+            <div class="controls">
+                <label id="labelN">Espiras (N): 500</label>
+                <input type="range" id="inputN" min="100" max="1000" value="500" oninput="update()">
+                
+                <label id="labelI">Corrente (I): 2.0 A</label>
+                <input type="range" id="inputI" min="0" max="10" step="0.1" value="2.0" oninput="update()">
+
+                <label id="labelG">Entreferro (g): 1.0 mm</label>
+                <input type="range" id="inputG" min="0.1" max="5" step="0.1" value="1.0" oninput="update()">
+                
+                <div class="result" id="fmmResult">FMM: 1000.0 A.t</div>
+            </div>
         </div>
-        
-        <div class="col-imagem">
-            <img src="https://raw.githubusercontent.com/cx3medeiros-lab/Apostila-CircuitosMagneticos/main/CircuitoBasico01.png" alt="Circuito Magnético">
-            <p style="font-size: 0.85em; color: #666; margin-top: 8px;">Figura 1: Representação do Núcleo.</p>
+
+        <div class="col" style="text-align: center;">
+            <h3>Simulação em Tempo Real</h3>
+            <canvas id="canvasFluxo" width="400" height="300"></canvas>
+            <p style="font-size: 0.8em; color: #666;">As partículas representam a densidade de fluxo \(B\).</p>
         </div>
     </div>
 
-    <div class="controls">
-        <h2>2. Laboratório de Simulação</h2>
-        <div class="control-group">
-            <label id="labelN">Número de Espiras (N): 500</label>
-            <input type="range" id="inputN" min="10" max="1000" value="500" oninput="update()">
-        </div>
-        <div class="control-group">
-            <label id="labelI">Corrente Aplicada (I): 2.0 A</label>
-            <input type="range" id="inputI" min="0.1" max="10" step="0.1" value="2.0" oninput="update()">
-        </div>
-        <div class="result" id="fmmResult">FMM Gerada: 1000.0 A.t</div>
-    </div>
-
-    <div class="chart-container">
+    <div style="height: 300px; margin-top: 30px;">
         <canvas id="meuGrafico"></canvas>
     </div>
 
-    <div class="conclusao">
-        <h2>3. Conclusão</h2>
-        <p>A curva demonstra o comportamento do fluxo. Imprima este PDF para seu relatório.</p>
-    </div>
-
     <script>
-        const ctx = document.getElementById('meuGrafico').getContext('2d');
-        let chart = new Chart(ctx, {
+        const canvas = document.getElementById('canvasFluxo');
+        const ctxAnim = canvas.getContext('2d');
+        let particles = [];
+        
+        // Criar partículas iniciais
+        for(let i=0; i<100; i++) {
+            particles.push({ t: Math.random() * 1, offset: (Math.random() - 0.5) * 30 });
+        }
+
+        function drawCore(gapSize) {
+            ctxAnim.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Desenho do Núcleo (Cinza)
+            ctxAnim.strokeStyle = "#555";
+            ctxAnim.lineWidth = 40;
+            ctxAnim.lineJoin = "round";
+            
+            // Caminho do núcleo com entreferro
+            ctxAnim.beginPath();
+            ctxAnim.moveTo(100, 50);
+            ctxAnim.lineTo(300, 50);
+            ctxAnim.lineTo(300, 120); // Topo do gap
+            ctxAnim.moveTo(300, 120 + gapSize * 10); // Fundo do gap
+            ctxAnim.lineTo(300, 250);
+            ctxAnim.lineTo(100, 250);
+            ctxAnim.lineTo(100, 50);
+            ctxAnim.stroke();
+
+            // Bobina (Cobre)
+            ctxAnim.strokeStyle = "#B87333";
+            ctxAnim.lineWidth = 15;
+            for(let i=0; i<5; i++) {
+                ctxAnim.beginPath();
+                ctxAnim.moveTo(85, 100 + (i*20));
+                ctxAnim.lineTo(115, 110 + (i*20));
+                ctxAnim.stroke();
+            }
+        }
+
+        function animate() {
+            const I = parseFloat(document.getElementById('inputI').value);
+            const G = parseFloat(document.getElementById('inputG').value);
+            const speed = I * 0.02; // Velocidade baseada na corrente
+            
+            drawCore(G);
+
+            // Partículas de Fluxo
+            ctxAnim.fillStyle = `rgba(0, 255, 255, ${Math.min(I/5, 1)})`;
+            particles.forEach(p => {
+                p.t += speed;
+                if (p.t > 1) p.t = 0;
+
+                // Lógica de caminho (percorre o retângulo)
+                let x, y;
+                let t = p.t;
+                let offset = p.offset;
+
+                if (t < 0.25) { // Topo
+                    x = 100 + (t/0.25) * 200; y = 50 + offset;
+                } else if (t < 0.5) { // Direita
+                    x = 300 + offset; y = 50 + ((t-0.25)/0.25) * 200;
+                    // Efeito de espraiamento no gap
+                    if (y > 120 && y < 120 + G*10) x += Math.sin((y-120)/(G*10)*Math.PI) * (G*5);
+                } else if (t < 0.75) { // Base
+                    x = 300 - ((t-0.5)/0.25) * 200; y = 250 + offset;
+                } else { // Esquerda
+                    x = 100 + offset; y = 250 - ((t-0.75)/0.25) * 200;
+                }
+
+                ctxAnim.beginPath();
+                ctxAnim.arc(x, y, 2, 0, Math.PI*2);
+                ctxAnim.fill();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        // --- Gráfico e Lógica de Cálculo ---
+        const ctxChart = document.getElementById('meuGrafico').getContext('2d');
+        let chart = new Chart(ctxChart, {
             type: 'line',
-            data: { 
-                labels: [], 
-                datasets: [{ 
-                    label: 'Fluxo (Wb)', data: [], borderColor: '#1E88E5', 
-                    backgroundColor: 'rgba(30, 136, 229, 0.1)', fill: true, tension: 0.3 
-                }] 
-            },
+            data: { labels: [], datasets: [{ label: 'Fluxo (Wb)', data: [], borderColor: '#1E88E5', fill: true }] },
             options: { responsive: true, maintainAspectRatio: false }
         });
 
         function update() {
             const N = document.getElementById('inputN').value;
             const I = document.getElementById('inputI').value;
-            document.getElementById('labelN').innerText = `Número de Espiras (N): ${N}`;
-            document.getElementById('labelI').innerText = `Corrente Aplicada (I): ${I} A`;
+            const G = document.getElementById('inputG').value / 1000;
+            
+            document.getElementById('labelN').innerText = `Espiras (N): ${N}`;
+            document.getElementById('labelI').innerText = `Corrente (I): ${I} A`;
+            document.getElementById('labelG').innerText = `Entreferro (g): ${(G*1000).toFixed(1)} mm`;
+            
             const fmm = N * I;
             document.getElementById('fmmResult').innerText = `FMM Gerada: ${fmm.toFixed(1)} A.t`;
 
-            const u0 = 4 * Math.PI * 1e-7;
-            const area = 0.01; const comp = 0.5; const ur = 2000;
             let labels = []; let dados = [];
-            for (let x = 0; x <= 0.005; x += 0.0005) {
-                const fluxo = fmm / ((comp / (ur * u0 * area)) + (x / (u0 * area)));
+            for (let x = 0.0001; x <= 0.005; x += 0.0005) {
+                const fluxo = fmm / ((0.5 / (2000 * 4e-7 * Math.PI * 0.01)) + (x / (4e-7 * Math.PI * 0.01)));
                 labels.push(x.toFixed(4)); dados.push(fluxo);
             }
             chart.data.labels = labels; chart.data.datasets[0].data = dados; chart.update();
         }
+
         update();
+        animate();
     </script>
 </body>
 </html>
