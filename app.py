@@ -29,7 +29,7 @@ st.markdown("""
 # 2. CABEÇALHO E INTRODUÇÃO
 st.title("🧲 Circuitos Magnéticos: Módulo 1")
 st.write("""
-Bem-vindo à sua apostila interativa. Este ambiente combina teoria, simulação e 
+Bem-vindo à sua apostila interativa. Este ambiente combina interatividade entre teoria, simulação e 
 cálculo em tempo real. Vamos explorar como o magnetismo é conduzido através da matéria.
 """)
 
