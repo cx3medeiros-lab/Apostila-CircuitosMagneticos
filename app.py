@@ -116,26 +116,15 @@ st.info(f"💡 Com os valores atuais, a Força Magnetomotriz gerada é de {fmm:.
 st.header("3. Conclusão")
 st.write("Utilize esta ferramenta para validar os exercícios da sua apostila.")
 
-# --- BOTÃO DE IMPRESSÃO PROFISSIONAL ---
-st.markdown("""
-    <div style="text-align: center; margin-top: 50px;">
-        <button onclick="window.print()" style="
-            background-color: #1E88E5;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 20px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border: none;
-            border-radius: 8px;
-            width: 100%;
-            font-weight: bold;
-        ">
-            📄 Gerar PDF / Imprimir Apostila
-        </button>
-    </div>
-    <br><br>
-""", unsafe_allow_html=True)
+# --- INSTRUÇÃO DE IMPRESSÃO NO RODAPÉ ---
+st.markdown("---")
+st.info("""
+### 📄 Como salvar ou imprimir esta Apostila:
+Para guardar os resultados das suas simulações em PDF ou imprimir o material:
+
+1. **No Computador:** Pressione **Ctrl + P** (ou Cmd + P no Mac).
+2. **No Android (Brave/Chrome):** Toque nos **três pontinhos** no canto superior ➔ **Compartilhar** ➔ **Imprimir**.
+3. **No iPhone (Safari):** Toque no ícone de **Compartilhar** (quadrado com seta) ➔ **Imprimir**.
+
+*Certifique-se de selecionar **"Salvar como PDF"** na lista de impressoras.*
+""")
