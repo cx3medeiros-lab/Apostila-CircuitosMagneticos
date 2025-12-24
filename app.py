@@ -1,9 +1,8 @@
 import streamlit as st
-
-st.title("Olá, obrigado por vir!")
-import streamlit as st
 import numpy as np
 import pandas as pd
+
+st.title("Olá, obrigado por vir!")
 
 # 1. CONFIGURAÇÃO DA PÁGINA E ESTILO (CSS para Projeção)
 st.set_page_config(page_title="Apostila Interativa", layout="wide")
