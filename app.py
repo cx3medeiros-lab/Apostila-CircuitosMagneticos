@@ -92,3 +92,11 @@ st.info(f"💡 Com os valores atuais, a Força Magnetomotriz gerada é de {fmm:.
 # --- 6. CONCLUSÃO ---
 st.header("3. Conclusão")
 st.write("Utilize esta ferramenta para validar os exercícios da sua apostila.")
+
+# Botão para Imprimir a Apostila
+if st.button("📄 Gerar PDF da Apostila"):
+    st.markdown("""
+        <script>
+            window.print();
+        </script>
+    """, unsafe_allow_html=True)
