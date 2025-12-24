@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apostila Interativa - Circuitos Magnéticos</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; max-width: 900px; margin: auto; color: #333; }
+        h1 { color: #1E88E5; font-size: 2.5em; }
+        h2 { color: #0D47A1; border-bottom: 2px solid #1E88E5; padding-bottom: 10px; }
+        .controls { background: #f4f4f4; padding: 20px; border-radius: 10px; margin: 20px 0; }
+        .control-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; font-size: 1.1em; }
+        input { width: 100%; }
+        .result { background: #e3f2fd; padding: 10px; border-radius: 5px; font-weight: bold; color: #0D47A1; }
+        canvas { margin-top: 20px; max-width: 100%; }
+
+        /* REGRAS DE IMPRESSÃO - O SEGREDO AQUI */
+        @media print {
+            .controls { display: none; } /* Esconde os sliders no PDF */
+            body { padding: 0; }
+            h2 { page-break-before: always; } /* Gráfico e conclusão vão para a página 2 */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🧲 Circuitos Magnéticos: Módulo 1</h1>
+    <p>Bem-vindo à sua apostila interativa. Altere os valores abaixo e veja o resultado em tempo real.</p>
+
+    <h2>1. A Analogia de Hopkinson</h2>
+    <p>A relação fundamental é dada pela Lei de Hopkinson:</p>
+    $ \mathcal{F} = \Phi \cdot \mathcal{R} $
+    <p>Onde \( \mathcal{F} = N \cdot I \).</p>
+
+    <div class="controls">
+        <h2>2. Laboratório de Simulação</h2>
+        <div class="control-group">
+            <label id="labelN">Número de Espiras (N): 500</label>
+            <input type="range" id="inputN" min="10" max="1000" value="500" oninput="update()">
+        </div>
+        <div class="control-group">
+            <label id="labelI">Corrente (I): 2.0 A</label>
+            <input type="range" id="inputI" min="0.1" max="10" step="0.1" value="2.0" oninput="update()">
+        </div>
+        <div class="result" id="fmmResult">Força Magnetomotriz: 1000.0 A.t</div>
+    </div>
+
+    <canvas id="meuGrafico"></canvas>
+
+    <h2>3. Conclusão</h2>
+    <p>Ao imprimir, este documento conterá os gráficos da sua última simulação.</p>
+
+    <script>
+        const ctx = document.getElementById('meuGrafico').getContext('2d');
+        let chart = new Chart(ctx, {
+            type: 'line',
+            data: { labels: [], datasets: [{ label: 'Fluxo (Wb)', data: [], borderColor: '#1E88E5', fill: false }] },
+            options: { scales: { x: { title: { display: true, text: 'Entreferro (m)' } }, y: { title: { display: true, text: 'Fluxo (Wb)' } } } }
+        });
+
+        function update() {
+            const N = document.getElementById('inputN').value;
+            const I = document.getElementById('inputI').value;
+            
+            document.getElementById('labelN').innerText = `Número de Espiras (N): ${N}`;
+            document.getElementById('labelI').innerText = `Corrente (I): ${I} A`;
+            
+            const fmm = N * I;
+            document.getElementById('fmmResult').innerText = `Força Magnetomotriz: ${fmm.toFixed(1)} A.t`;
+
+            // Cálculos Físicos
+            const u0 = 4 * Math.PI * 1e-7;
+            const area = 0.01;
+            const comp = 0.5;
+            const ur = 2000;
+
+            let labels = [];
+            let dados = [];
+            for (let x = 0; x <= 0.005; x += 0.0005) {
+                const rel_n = comp / (ur * u0 * area);
+                const rel_a = x / (u0 * area);
+                const fluxo = fmm / (rel_n + rel_a);
+                labels.push(x.toFixed(4));
+                dados.push(fluxo);
+            }
+
+            chart.data.labels = labels;
+            chart.data.datasets[0].data = dados;
+            chart.update();
+        }
+        update();
+    </script>
+</body>
+</html>
