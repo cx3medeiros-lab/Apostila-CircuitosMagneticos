@@ -8,59 +8,48 @@ st.set_page_config(page_title="Apostila Interativa", layout="wide")
 # --- 2. ESTILO CSS UNIFICADO ---
 st.markdown("""
     <style>
-    /* 1. INTERFACE DO SITE */
-    
-    /* Esconde a raposinha e a barra superior */
-    header[data-testid="stHeader"] {
-        display: none !important;
-    }
-    
-    /* Ajusta o espaçamento do topo */
-    .main .block-container {
-        padding-top: 1.5rem !important;
-    }
-
-    /* Estilo do texto do corpo */
-    .stMarkdown p {
-        font-size: 24px !important;
-        line-height: 1.6;
-    }
-
-    /* Estilo dos títulos */
-    h1 { color: #1E88E5; font-size: 55px !important; font-weight: bold; }
-    h2 { color: #0D47A1; font-size: 38px !important; margin-top: 30px; border-bottom: 2px solid #1E88E5; }
-    
-    /* Fórmulas matemáticas maiores */
+    /* 1. ESTILO DO SITE (VISUALIZAÇÃO NO CELULAR/PC) */
+    header[data-testid="stHeader"] { display: none !important; }
+    .main .block-container { padding-top: 1.5rem !important; }
+    .stMarkdown p { font-size: 24px !important; line-height: 1.6; }
+    h1 { color: #1E88E5; font-size: 55px !important; }
+    h2 { color: #0D47A1; font-size: 38px !important; margin-top: 30px; }
     .katex { font-size: 1.4em !important; }
 
-    /* 2. CONFIGURAÇÃO PARA IMPRESSÃO (PDF) */
-/* 2. CONFIGURAÇÃO PARA IMPRESSÃO (PDF) */
+    /* 2. SOLUÇÃO DEFINITIVA PARA IMPRESSÃO DE MÚLTIPLAS PÁGINAS */
     @media print {
-        /* Remove as travas de rolagem e altura que cortam a página */
-        html, body, .stApp, .main, .block-container {
+        /* Desativa o scroll interno do Streamlit e força altura total */
+        #root, .appview-container, .main, .stApp, .block-container {
             display: block !important;
-            height: auto !important;
-            overflow: visible !important;
             position: static !important;
+            overflow: visible !important;
+            height: auto !important;
+            min-height: auto !important;
         }
 
-        /* Esconde elementos desnecessários */
-        header, footer, .stSidebar, [data-testid="stHeader"], .stInfo, .stButton, .stSlider {
+        /* Remove o cabeçalho, rodapé e os controles interativos (sliders) no PDF */
+        header, footer, [data-testid="stHeader"], .stInfo, .stSlider, .stButton {
             display: none !important;
         }
-        
-        /* Garante que o conteúdo ocupe a largura total e não tenha margens estranhas */
+
+        /* Ajusta as margens para o PDF não cortar o conteúdo nas bordas */
         .main .block-container {
             max-width: 100% !important;
-            padding: 0 !important;
+            padding: 1cm !important;
             margin: 0 !important;
         }
 
-        /* Força a quebra de página antes de cada título de seção para não cortar o gráfico ao meio */
+        /* Garante que o navegador entenda que pode quebrar a página */
+        .stMarkdown, .element-container {
+            page-break-inside: auto !important;
+        }
+        
         h2 {
-            page-break-before: always;
+            page-break-before: always !important; /* Cada seção começa em nova página */
+            margin-top: 0 !important;
         }
 
+        /* Força a renderização das cores e gráficos no PDF */
         * {
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
