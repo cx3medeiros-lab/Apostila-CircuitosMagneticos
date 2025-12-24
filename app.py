@@ -1,27 +1,22 @@
 import streamlit as st
 
-# Para que o Streamlit use 100% da largura da tela do celular (evitando margens brancas laterais):
-st.set_page_config(layout="wide")
+# 1. Definição do estilo (o nome da variável é 'estilo_limpo')
+estilo_limpo = """
+    <style>
+    /* Esconde o menu do topo, o rodapé e a barra de ferramentas */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    [data-testid="stToolbar"] {visibility: hidden !important;}
+    .stAppDeployButton {display: none;}
+    </style>
+    """
 
-import streamlit as st
+# 2. Aplicação do estilo (usando o mesmo nome da variável acima)
+st.markdown(estilo_limpo, unsafe_allow_html=True)
 
-# CSS atualizado para esconder TUDO (Menu, Rodapé e a barra do GitHub)
-hide_st_style = """
-            <style>
-            /* Esconde o menu principal (hambúrguer) */
-            #MainMenu {visibility: hidden;}
-            /* Esconde o rodapé padrão */
-            footer {visibility: hidden;}
-            /* Esconde a barra de ferramentas do Streamlit no topo e a do GitHub embaixo */
-            header {visibility: hidden;}
-            [data-testid="stToolbar"] {visibility: hidden !important;}
-            [data-testid="stDecoration"] {display: none;}
-            [data-testid="stStatusWidget"] {display: none;}
-            #manage-app-button {display: none;}
-            .stAppDeployButton {display: none;}
-            </style>
-            """
-st.markdown(hide_style, unsafe_allow_html=True)
+# --- Daqui para baixo continua o conteúdo da sua apostila ---
+st.write("Sua apostila de Circuitos Magnéticos")
 
 st.title("Hello World!")
 import streamlit as st
@@ -29,7 +24,7 @@ import numpy as np
 import pandas as pd
 
 # 1. CONFIGURAÇÃO DA PÁGINA E ESTILO (CSS para Projeção)
-st.set_page_config(page_title="Apostila Magnética", layout="wide")
+st.set_page_config(page_title="Apostila Interativa", layout="wide")
 
 st.markdown("""
     <style>
