@@ -42,7 +42,9 @@ st.markdown("""
 st.title("🧲 Circuitos Magnéticos: Módulo 1")
 st.write("""
 Bem-vindo à sua apostila interativa. Este ambiente combina interatividade entre teoria, simulação e 
-cálculo em tempo real. Vamos explorar como o magnetismo é conduzido através da matéria.
+cálculo em tempo real.
+
+Vamos explorar circuitos magnéticos, entender como o fluxo magnético é conduzido através de materiais.
 """)
 
 # 3. CONTEÚDO TEÓRICO COM IMAGEM
