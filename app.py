@@ -19,7 +19,7 @@ st.markdown("""
 
 # O código da apostila continua aqui...
 
-st.title("Olá, obrigado por vir!")
+st.title("Olá, bem-vindo!")
 
 # 1. CONFIGURAÇÃO DA PÁGINA E ESTILO (CSS para Projeção)
 st.set_page_config(page_title="Apostila Interativa", layout="wide")
