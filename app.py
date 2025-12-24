@@ -1,5 +1,8 @@
 import streamlit as st
 
+# Para que o Streamlit use 100% da largura da tela do celular (evitando margens brancas laterais):
+st.set_page_config(layout="wide")
+
 st.title("Hello World!")
 import streamlit as st
 import numpy as np
