@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.title("Olá, obrigado!")
+st.title("Olá, obrigado por vir!")
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -88,7 +88,3 @@ st.write("""
 Ao imprimir este documento, os gráficos acima representarão o estado da sua última 
 simulação. Utilize esta ferramenta para validar os exercícios da página 42 da apostila estática.
 """)
-
-# No final do seu arquivo app.py
-# Um espaço em branco no final do seu código Python para que o texto da apostila termine antes de chegar nos ícones.
-st.markdown("<br><br><br>", unsafe_allow_html=True)
