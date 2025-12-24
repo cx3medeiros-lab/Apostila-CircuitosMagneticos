@@ -34,28 +34,36 @@ st.markdown("""
     .katex { font-size: 1.4em !important; }
 
     /* 2. CONFIGURAÇÃO PARA IMPRESSÃO (PDF) */
+/* 2. CONFIGURAÇÃO PARA IMPRESSÃO (PDF) */
     @media print {
-        /* Esconde elementos desnecessários e a caixa de instruções no PDF */
+        /* Remove as travas de rolagem e altura que cortam a página */
+        html, body, .stApp, .main, .block-container {
+            display: block !important;
+            height: auto !important;
+            overflow: visible !important;
+            position: static !important;
+        }
+
+        /* Esconde elementos desnecessários */
         header, footer, .stSidebar, [data-testid="stHeader"], .stInfo, .stButton, .stSlider {
             display: none !important;
         }
         
-        /* Garante que o conteúdo ocupe a largura total da folha A4 */
+        /* Garante que o conteúdo ocupe a largura total e não tenha margens estranhas */
         .main .block-container {
             max-width: 100% !important;
             padding: 0 !important;
             margin: 0 !important;
         }
 
-        /* Mantém as cores dos gráficos e títulos na impressão */
+        /* Força a quebra de página antes de cada título de seção para não cortar o gráfico ao meio */
+        h2 {
+            page-break-before: always;
+        }
+
         * {
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
-        }
-
-        /* Evita que títulos fiquem sozinhos no fim da página */
-        h1, h2 {
-            page-break-after: avoid;
         }
     }
     </style>
