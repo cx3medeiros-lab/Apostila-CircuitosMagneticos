@@ -2,8 +2,6 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 
-import streamlit as st
-
 # CSS para remover a barra superior inteira (onde fica a rapozinha)
 st.markdown("""
     <style>
@@ -21,7 +19,7 @@ st.markdown("""
 
 # O código da apostila continua aqui...
 
-st.title("Olá, obrigado!")
+st.title("Olá, obrigado por vir!")
 
 # 1. CONFIGURAÇÃO DA PÁGINA E ESTILO (CSS para Projeção)
 st.set_page_config(page_title="Apostila Interativa", layout="wide")
