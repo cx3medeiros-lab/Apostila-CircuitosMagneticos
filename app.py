@@ -5,14 +5,22 @@ st.set_page_config(layout="wide")
 
 import streamlit as st
 
-# Código para esconder o menu (hambúrguer) e o rodapé (Streamlit/GitHub)
-hide_style = """
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    </style>
-    """
+# CSS atualizado para esconder TUDO (Menu, Rodapé e a barra do GitHub)
+hide_st_style = """
+            <style>
+            /* Esconde o menu principal (hambúrguer) */
+            #MainMenu {visibility: hidden;}
+            /* Esconde o rodapé padrão */
+            footer {visibility: hidden;}
+            /* Esconde a barra de ferramentas do Streamlit no topo e a do GitHub embaixo */
+            header {visibility: hidden;}
+            [data-testid="stToolbar"] {visibility: hidden !important;}
+            [data-testid="stDecoration"] {display: none;}
+            [data-testid="stStatusWidget"] {display: none;}
+            #manage-app-button {display: none;}
+            .stAppDeployButton {display: none;}
+            </style>
+            """
 st.markdown(hide_style, unsafe_allow_html=True)
 
 st.title("Hello World!")
