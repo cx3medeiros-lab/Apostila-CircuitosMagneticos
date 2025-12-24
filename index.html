@@ -10,104 +10,67 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <style>
-        /* CONFIGURAÇÕES GERAIS */
         body { 
             font-family: 'Segoe UI', Arial, sans-serif; 
-            line-height: 1.6; 
-            padding: 20px; 
-            max-width: 950px; 
-            margin: auto; 
-            color: #333; 
-            background: #fff; 
+            line-height: 1.6; padding: 20px; max-width: 950px; 
+            margin: auto; color: #333; background: #fff; 
         }
-        h1 { color: #1E88E5; font-size: 2.5em; margin-bottom: 0.5em; }
+        h1 { color: #1E88E5; font-size: 2.5em; }
         h2 { color: #0D47A1; border-bottom: 2px solid #1E88E5; padding-bottom: 8px; margin-top: 25px; }
         
-        /* LAYOUT LADO A LADO (EQUAÇÃO E IMAGEM) */
         .container-topo {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            align-items: center;
-            margin-bottom: 20px;
+            display: flex; flex-wrap: wrap; gap: 30px; align-items: center; margin-bottom: 20px;
         }
         .col-texto { flex: 1; min-width: 320px; }
         .col-imagem { flex: 1; min-width: 320px; text-align: center; }
         
         img { 
-            max-width: 100%; 
-            height: auto; 
-            border-radius: 10px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            display: block; max-width: 100%; height: auto; 
+            border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
         }
 
-        /* CONTROLES DA SIMULAÇÃO */
         .controls { 
-            background: #f9f9f9; 
-            padding: 20px; 
-            border-radius: 12px; 
-            margin: 25px 0; 
-            border: 1px solid #eee; 
+            background: #f9f9f9; padding: 20px; border-radius: 12px; 
+            margin: 25px 0; border: 1px solid #eee; 
         }
-        .control-group { margin-bottom: 15px; }
-        label { font-weight: bold; display: block; margin-bottom: 5px; }
         input[type=range] { width: 100%; cursor: pointer; }
-        
         .result { 
-            background: #e3f2fd; 
-            padding: 15px; 
-            border-radius: 8px; 
-            font-weight: bold; 
-            color: #0D47A1; 
-            text-align: center; 
-            font-size: 1.2em;
-            margin-top: 10px;
+            background: #e3f2fd; padding: 15px; border-radius: 8px; 
+            font-weight: bold; color: #0D47A1; text-align: center; font-size: 1.2em;
         }
 
-        /* CONTAINER DO GRÁFICO (ALTURA AJUSTADA) */
-        .chart-container {
-            position: relative;
-            height: 350px; /* Altura ideal para não ficar gigante */
-            width: 100%;
-            margin: 20px 0;
-        }
+        .chart-container { position: relative; height: 350px; width: 100%; margin: 20px 0; }
 
-        /* REGRAS DE IMPRESSÃO */
+        /* REGRAS DE IMPRESSÃO - SOLUÇÃO DEFINITIVA */
         @media print {
-            .controls { display: none; } /* Oculta sliders no PDF */
-            body { padding: 0; }
-            .container-topo { display: flex !important; flex-direction: row !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            .controls { display: none !important; }
+            .container-topo { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; }
+            img { width: 300px !important; display: block !important; visibility: visible !important; }
             .chart-container { height: 300px !important; page-break-inside: avoid; }
-            h2 { page-break-before: always; } /* Começa nova página na conclusão se necessário */
+            h2 { page-break-before: always; }
         }
 
-        /* AJUSTE PARA CELULAR */
-        @media (max-width: 600px) {
-            .container-topo { flex-direction: column; }
-            h1 { font-size: 2em; }
-        }
+        @media (max-width: 600px) { .container-topo { flex-direction: column; } }
     </style>
 </head>
 <body>
 
     <h1>🧲 Circuitos Magnéticos: Módulo 1</h1>
-    <p>Explore a interatividade entre teoria e prática. Altere os parâmetros para recalcular o sistema em tempo real.</p>
 
     <div class="container-topo">
         <div class="col-texto">
             <h2>1. A Analogia de Hopkinson</h2>
-            <p>O fluxo magnético percorre o caminho de menor <b>Relutância</b>. A relação fundamental é dada por:</p>
-            
+            <p>O fluxo magnético percorre o caminho de menor <b>Relutância</b>.</p>
             <div style="font-size: 1.7em; padding: 15px 0; text-align: center;">
                 \[ \mathcal{F} = \Phi \cdot \mathcal{R} \]
             </div>
-            
-            <p>Onde \( \mathcal{F} = N \cdot I \) é a Força Magnetomotriz (A.t).</p>
+            <p>Onde \( \mathcal{F} = N \cdot I \) é a Força Magnetomotriz.</p>
         </div>
         
         <div class="col-imagem">
-            <img src="CircuitoBasico01.png" alt="Desenho do Circuito Magnético">
-            <p style="font-size: 0.85em; color: #666; margin-top: 8px;">Esquema do Núcleo e Enrolamento.</p>
+            <img src="https://raw.githubusercontent.com/cx3medeiros-lab/Apostila-CircuitosMagneticos/main/CircuitoBasico01.png" alt="Circuito Magnético">
+            <p style="font-size: 0.85em; color: #666; margin-top: 8px;">Figura 1: Representação do Núcleo.</p>
         </div>
     </div>
 
@@ -130,7 +93,7 @@
 
     <div class="conclusao">
         <h2>3. Conclusão</h2>
-        <p>A curva acima demonstra como o fluxo magnético decai conforme a relutância do entreferro aumenta. Utilize estes dados para validar seus cálculos teóricos.</p>
+        <p>A curva demonstra o comportamento do fluxo. Imprima este PDF para seu relatório.</p>
     </div>
 
     <script>
@@ -140,52 +103,30 @@
             data: { 
                 labels: [], 
                 datasets: [{ 
-                    label: 'Fluxo Magnético (Wb)', 
-                    data: [], 
-                    borderColor: '#1E88E5', 
-                    backgroundColor: 'rgba(30, 136, 229, 0.1)', 
-                    fill: true,
-                    tension: 0.3
+                    label: 'Fluxo (Wb)', data: [], borderColor: '#1E88E5', 
+                    backgroundColor: 'rgba(30, 136, 229, 0.1)', fill: true, tension: 0.3 
                 }] 
             },
-            options: { 
-                responsive: true, 
-                maintainAspectRatio: false,
-                scales: {
-                    x: { title: { display: true, text: 'Entreferro (m)' } },
-                    y: { title: { display: true, text: 'Fluxo (Wb)' } }
-                }
-            }
+            options: { responsive: true, maintainAspectRatio: false }
         });
 
         function update() {
             const N = document.getElementById('inputN').value;
             const I = document.getElementById('inputI').value;
-            
             document.getElementById('labelN').innerText = `Número de Espiras (N): ${N}`;
             document.getElementById('labelI').innerText = `Corrente Aplicada (I): ${I} A`;
-            
             const fmm = N * I;
             document.getElementById('fmmResult').innerText = `FMM Gerada: ${fmm.toFixed(1)} A.t`;
 
             const u0 = 4 * Math.PI * 1e-7;
             const area = 0.01; const comp = 0.5; const ur = 2000;
             let labels = []; let dados = [];
-            
             for (let x = 0; x <= 0.005; x += 0.0005) {
-                const rel_n = comp / (ur * u0 * area);
-                const rel_a = x / (u0 * area);
-                const fluxo = fmm / (rel_n + rel_a);
-                labels.push(x.toFixed(4));
-                dados.push(fluxo);
+                const fluxo = fmm / ((comp / (ur * u0 * area)) + (x / (u0 * area)));
+                labels.push(x.toFixed(4)); dados.push(fluxo);
             }
-
-            chart.data.labels = labels;
-            chart.data.datasets[0].data = dados;
-            chart.update();
+            chart.data.labels = labels; chart.data.datasets[0].data = dados; chart.update();
         }
-        
-        // Executa ao carregar
         update();
     </script>
 </body>
